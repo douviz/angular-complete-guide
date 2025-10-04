@@ -1,9 +1,10 @@
 import {Component, input} from '@angular/core';
 import {NgIf} from "@angular/common";
-import {User} from "../user/user";
+import {UserModel} from "../user/user.model";
 import {DUMMY_TASKS} from "../dummy-tasks";
 import {TaskComponent} from "./task/task.component";
 import {NewTaskComponent} from "./new-task/new-task.component";
+import {type NewTaskData} from "./task.model";
 
 @Component({
   selector: 'app-tasks',
@@ -17,7 +18,7 @@ import {NewTaskComponent} from "./new-task/new-task.component";
   styleUrl: './tasks.component.css'
 })
 export class TasksComponent {
-  selectedUser = input.required<User>();
+  selectedUser = input.required<UserModel>();
   tasks = DUMMY_TASKS;
   isAddingTask = false;
 
@@ -37,5 +38,18 @@ export class TasksComponent {
 
   onCancelAddTask() {
     this.isAddingTask = false;
+  }
+
+  onAddTask(taskData: NewTaskData) {
+    this.tasks.unshift({
+      id: new Date().getTime().toString(),
+      userId: this.selectedUser().id,
+      title: taskData.title,
+      summary: taskData.summary,
+      dueDate: taskData.dueDate
+    });
+
+    this.isAddingTask = false;
+
   }
 }

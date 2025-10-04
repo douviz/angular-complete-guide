@@ -1,11 +1,14 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 
-import {User} from './user';
+import {UserModel} from './user.model';
+import {CardComponent} from "../shared/card/card.component";
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [],
+  imports: [
+    CardComponent
+  ],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
@@ -21,7 +24,7 @@ export class UserComponent {
   // select = output<string>();
 
   // Without Signals
-  @Input({required: true}) user!: User;
+  @Input({required: true}) user!: UserModel;
   @Input({required: true}) selected!: boolean;
   @Output() select = new EventEmitter<string>();
 
